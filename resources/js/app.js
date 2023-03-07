@@ -1,19 +1,20 @@
- import axios from 'axios'
- import Noty from 'noty'
- import { initAdmin } from './admin'
- import moment from 'moment'
- import { initStripe } from './stripe'
+import axios from 'axios'
+import Noty from 'noty'
+import { initAdmin } from './admin'
+import moment from 'moment'
+import { initStripe } from './stripe'
 
 let addToCart = document.querySelectorAll('.add-to-cart')
+let removeToCart = document.querySelectorAll(".remove-to-cart");
 let cartCounter = document.querySelector('#cartCounter')
 
-function updateCart(pizza) {
-    axios.post('/update-cart', pizza).then(res => {
+function updateCart(pizza, url, msg) {
+    axios.post(url, pizza).then(res => {
         cartCounter.innerText = res.data.totalQty
         new Noty({
             type: 'success',
             timeout: 1000,
-            text: 'Item added to cart',
+            text: msg,
             progressBar: false,
         }).show();
     }).catch(err => {
@@ -29,13 +30,26 @@ function updateCart(pizza) {
 addToCart.forEach((btn) => {
     btn.addEventListener('click', (e) => {
         let pizza = JSON.parse(btn.dataset.pizza)
-        updateCart(pizza)
+        // if data fetched from session , there will be have "item object" => (cart.ejs)
+        if (pizza.item) {
+            pizza = pizza.item;
+        }
+        let url = "/update-cart";
+        updateCart(pizza, url, "Item added to cart");
+    });
+});
+
+removeToCart.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+        let pizza = JSON.parse(btn.dataset.pizza);
+        let url = "/remove-cart";
+        updateCart(pizza.item, url, "Item removed to cart");
     })
 })
 
 // Remove alert message after X seconds
 const alertMsg = document.querySelector('#success-alert')
-if(alertMsg) {
+if (alertMsg) {
     setTimeout(() => {
         alertMsg.remove()
     }, 2000)
@@ -57,18 +71,18 @@ function updateStatus(order) {
     })
     let stepCompleted = true;
     statuses.forEach((status) => {
-       let dataProp = status.dataset.status
-       if(stepCompleted) {
+        let dataProp = status.dataset.status
+        if (stepCompleted) {
             status.classList.add('step-completed')
-       }
-       if(dataProp === order.status) {
+        }
+        if (dataProp === order.status) {
             stepCompleted = false
             time.innerText = moment(order.updatedAt).format('hh:mm A')
             status.appendChild(time)
-           if(status.nextElementSibling) {
-            status.nextElementSibling.classList.add('current')
-           }
-       }
+            if (status.nextElementSibling) {
+                status.nextElementSibling.classList.add('current')
+            }
+        }
     })
 
 }
@@ -81,11 +95,11 @@ initStripe()
 let socket = io()
 
 // Join
-if(order) {
+if (order) {
     socket.emit('join', `order_${order._id}`)
 }
 let adminAreaPath = window.location.pathname
-if(adminAreaPath.includes('admin')) {
+if (adminAreaPath.includes('admin')) {
     initAdmin(socket)
     socket.emit('join', 'adminRoom')
 }

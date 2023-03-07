@@ -1,0 +1,50 @@
+[
+    {
+        "_id": {
+            "$oid": "8eee651f739f8c674fd736ee"
+        },
+        "name": "Stand Up India",
+        "image": "standupuindia.png",
+        "Gov": "Small Industrial and Government bank india"
+    },
+    {
+        "_id": {
+            "$oid": "8eee6671a27a66807cf2bea3"
+        },
+        "name": "Mudra",
+        "image": "Mudra.png",
+        "Gov": "Government of india"
+    },
+    {
+        "_id": {
+            "$oid": "8eee6692a27a66807cf2bea4"
+        },
+        "name": "nsic",
+        "image": "nsic.png",
+        "Gov": "Government of india"
+    },
+    {
+        "_id": {
+            "$oid": "8eee66a5a27a66807cf2bea5"
+        },
+        "name": "psb Loans",
+        "image": "psb-loans.png",
+        "Gov": "Government of india"
+    },
+    {
+        "_id": {
+            "$oid": "8eee66c4a27a66807cf2bea6"
+        },
+        "name": "Udiyogini",
+        "image": "udiyogini.png",
+        "Gov": "Government of india"
+    },
+    {
+        "_id": {
+            "$oid": "8eee66eea27a66807cf2bea8"
+        },
+        "name": "Credit link",
+        "image": "clcss.png",
+        "Gov": "Government of india"
+    }
+]
