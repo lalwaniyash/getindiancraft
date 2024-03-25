@@ -12,6 +12,9 @@ Get Indian Craft is a bespoke e-commerce platform tailored to Indian artisans, d
 - Helpful Video Support
 
 
+## 🔗 Project link
+
+👉 https://getindiancraft.onrender.com/ 👈
 ## Run Locally
 
 Clone the project
